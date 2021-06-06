@@ -7,6 +7,14 @@ const routes = [
       { path: '', component: () => import('pages/Index.vue') }
     ]
   },
+  // For Browser Extension
+  {
+    path: '/',
+    component: () => import('layouts/BEXMainLayout.vue'),
+    children: [
+      { path: 'popup', component: () => import('pages/PopupPage.vue') }
+    ]
+  },
 
   // Always leave this as last one,
   // but you can also remove it
