@@ -1,18 +1,29 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header flat>
-      <q-toolbar class="text-white bg-indigo-8">
+      <q-toolbar class="text-white bg-blue-9">
         <q-btn flat round dense icon="speaker" />
         <q-toolbar-title>Voice Receiver</q-toolbar-title>
         <q-space />
-        <q-badge color="yellow">v0.0.1</q-badge>
-        <q-btn flat round dense icon="mic" />
+        <q-badge color="white" text-color="blue-9">
+          v0.0.1
+        </q-badge>
       </q-toolbar>
     </q-header>
 
     <q-page-container>
       <router-view />
     </q-page-container>
+      
+      <q-footer >
+        <q-toolbar class="bg-white">
+          <q-toolbar-title>
+            <div class="text-overline text-blue-grey">
+              MSU Marawi Public Address System
+            </div>
+            </q-toolbar-title>
+        </q-toolbar>
+      </q-footer>
   </q-layout>
 </template>
 
