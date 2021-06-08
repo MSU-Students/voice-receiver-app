@@ -1,5 +1,5 @@
 <template>
-  <q-page padding style="min-width: 450px">
+  <q-page padding style="min-width: 440px">
     <div class="q-pa-md">
       <q-card class="my-card" flat>
         <q-card-section v-if="isSpeakerOn" class="text-center">
@@ -11,10 +11,14 @@
             icon="mic"
             @click="muteSpeaker()"
           />
-          
           <div class="row justify-center text-overline">
             {{ status }}
+            <q-spinner-audio
+              color="primary"
+              size="2em"
+            />
           </div>
+        
         </q-card-section>
         <q-card-section v-else class="text-center">
           <q-btn
