@@ -10,7 +10,12 @@
             color="green-6"
             icon="mic"
             @click="muteSpeaker()"
-          />
+          >
+          <q-tooltip anchor="center middle" self="center middle" :offset="[10, 10]">
+            <strong>Mute My Audio </strong>
+            <q-icon size="20px" name="mic_off"/>
+          </q-tooltip>
+          </q-btn>
           <div class="row justify-center text-overline">
             {{ status }}
             <q-spinner-audio
@@ -29,6 +34,10 @@
             icon="mic_off"
             @click="onSpeaker()"
           />
+          <q-tooltip anchor="center middle" self="center middle" :offset="[10, 10]">
+            <strong>Unmute My Audio </strong>
+            <q-icon size="20px" name="volume_off"/>
+          </q-tooltip>
         </q-card-section>
       </q-card>
     </div>
