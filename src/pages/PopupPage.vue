@@ -16,7 +16,7 @@
               self="center middle"
               :offset="[10, 10]"
             >
-              <strong>Press to Mute</strong>
+              <strong>Press to Mute </strong>
               <q-icon size="20px" name="volume_off" />
             </q-tooltip>
           </q-btn>
