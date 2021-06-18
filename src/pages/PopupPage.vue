@@ -37,12 +37,7 @@
             <q-badge text-color="black" color="yellow-5">
               Press to Unmute..
             </q-badge>
-            
           </div>
-          <!-- <q-tooltip anchor="center middle" self="center middle" :offset="[10, 10]">
-            <strong>Unmute My Audio </strong>
-            <q-icon size="20px" name="volume_off"/>
-          </q-tooltip> -->
         </q-card-section>
       </q-card>
     </div>
