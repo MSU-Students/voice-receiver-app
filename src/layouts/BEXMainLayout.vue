@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header flat>
-      <q-toolbar class="text-white bg-blue-9">
+    <q-header style="background: linear-gradient(145deg, #15503e 15%, #133154 70%);">
+      <q-toolbar>
         <q-btn flat round dense icon="speaker" />
         <q-toolbar-title>Voice Receiver</q-toolbar-title>
         <q-space />
