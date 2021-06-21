@@ -1,6 +1,6 @@
 <template>
   <q-page style="min-width: 440px">
-    <q-toolbar class="bg-grey-4 text-dark">
+    <q-toolbar class="text-white" style="background: linear-gradient(145deg, #15503e 15%, #133154 70%);">
         <q-btn icon="arrow_back" flat label="Back" to="/popup"/>
         <q-space />
 
