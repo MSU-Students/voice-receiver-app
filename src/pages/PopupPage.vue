@@ -37,9 +37,16 @@
             Press to Unmute
           </div>
         </q-card-section>
-      <q-separator />
+        <q-separator />
         <q-card-actions align="right">
-          <q-btn outline icon="maps_home_work" color="indigo" label="Instituition Info" to="/office" no-caps/>
+          <q-btn
+            outline
+            icon="maps_home_work"
+            color="indigo"
+            label="Instituition Info"
+            to="/office"
+            no-caps
+          />
         </q-card-actions>
       </q-card>
     </div>
@@ -52,7 +59,8 @@ export default {
   data() {
     return {
       isSpeakerOn: true,
-      status: "Listening..."
+      status: "Listening...",
+      tab: ''
     };
   },
   methods: {
