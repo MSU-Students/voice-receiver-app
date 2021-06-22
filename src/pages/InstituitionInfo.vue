@@ -85,18 +85,25 @@ export default {
 
   methods: {
     async onSubmit() {
-      areaProfileService.addProfile("area", this.area);
-      this.$q.notify({
-        color: "green-4",
-        textColor: "white",
-        icon: "cloud_done",
-        message: "Submitted"
-      });
+      areaProfileService.addProfile("area", this.area).then(() => {
+        this.$router.replace("/popup");
+        this.notifyMessage("Welcome User!", "green-6")
+      })
+      
     },
 
     async getOfficeDetails() {
       const officeProfile = await areaProfileService.getOfficeDetails();
       this.officeDetails = officeProfile;
+    },
+
+    notifyMessage(msg, color) {
+      this.$q.notify({
+        message: msg,
+        color: color,
+        timeout: 300,
+        icon: "cloud_done"
+      })
     }
   }
 };
