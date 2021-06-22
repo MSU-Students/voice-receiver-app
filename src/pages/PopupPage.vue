@@ -43,7 +43,7 @@
             outline
             icon="maps_home_work"
             color="indigo"
-            label="Instituition Info"
+            label="Manage Office Profile"
             to="/office"
             no-caps
           />
