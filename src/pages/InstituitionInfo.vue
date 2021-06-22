@@ -6,7 +6,7 @@
     >
       <q-btn icon="arrow_back" flat label="Back" to="/popup" />
       <q-toolbar-title class="text-center">
-        Instituition Info
+        <strong>Instituition</strong> Info
       </q-toolbar-title>
     </q-toolbar>
 
@@ -19,7 +19,7 @@
             </q-item-section>
             <q-item-section>
               <q-item-label> {{ officeDetails.officeName }}</q-item-label>
-              <q-item-label caption> {{ officeDetails.codeNum }}</q-item-label>
+              <q-item-label caption> @{{ officeDetails.codeNum }}</q-item-label>
             </q-item-section>
           </q-item>
         </q-card-section>
@@ -30,7 +30,7 @@
               filled
               v-model="area.officeName"
               label="College/Office Name"
-              hint="college or office"
+              hint="ex. Office of the Registrar"
               lazy-rules
               :rules="[
                 val => (val && val.length > 0) || 'Please type something.'
@@ -42,7 +42,7 @@
               type="number"
               v-model="area.codeNum"
               label="Code #."
-              hint="sample: 1001"
+              hint="ex. 1001"
               lazy-rules
               :rules="[
                 val =>
@@ -86,10 +86,12 @@ export default {
   methods: {
     async onSubmit() {
       areaProfileService.addProfile("area", this.area).then(() => {
-        this.$router.replace("/popup");
-        this.notifyMessage("Welcome User!", "green-6")
+        setTimeout(() => {
+          this.$router.replace("/popup");
+          this.notifyMessage("Welcome User!", "green-6")
+        }, 1000);
+        
       })
-      
     },
 
     async getOfficeDetails() {
