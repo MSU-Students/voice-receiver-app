@@ -78,20 +78,21 @@ export default {
       }
     };
   },
-
-  created() {
+  mounted() {
     this.getOfficeDetails();
+  },
+  created() {
+    areaProfileService.isItemExist("area");    
   },
 
   methods: {
     async onSubmit() {
-      areaProfileService.addProfile("area", this.area).then(() => {
+        areaProfileService.addProfile("area", this.area).then(() => {
         setTimeout(() => {
           this.$router.replace("/popup");
           this.notifyMessage("Welcome User!", "green-6")
         }, 1000);
-        
-      })
+        })
     },
 
     async getOfficeDetails() {
