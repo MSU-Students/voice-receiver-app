@@ -34,11 +34,20 @@
             @click="onSpeaker()"
           />
           <div class="row justify-center q-pt-sm text-overline">
-            <q-badge text-color="black" color="yellow-5">
-              Press to Unmute..
-            </q-badge>
+            Press to Unmute
           </div>
         </q-card-section>
+        <q-separator />
+        <q-card-actions align="right">
+          <q-btn
+            outline
+            icon="maps_home_work"
+            color="indigo"
+            label="Manage Office Profile"
+            to="/office"
+            no-caps
+          />
+        </q-card-actions>
       </q-card>
     </div>
   </q-page>
@@ -50,7 +59,8 @@ export default {
   data() {
     return {
       isSpeakerOn: true,
-      status: "Listening..."
+      status: "Listening...",
+      tab: ''
     };
   },
   methods: {

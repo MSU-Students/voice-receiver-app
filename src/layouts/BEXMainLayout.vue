@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh Lpr lFf">
     <q-header style="background: linear-gradient(145deg, #15503e 15%, #133154 70%);">
-      <q-toolbar>
+      <q-toolbar v-if="['/popup'].find(p => p == $route.path)">
         <q-btn flat round dense icon="speaker" />
         <q-toolbar-title>Voice Receiver</q-toolbar-title>
         <q-space />
