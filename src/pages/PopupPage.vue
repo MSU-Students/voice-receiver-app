@@ -38,6 +38,35 @@
           </div>
         </q-card-section>
         <q-separator />
+        <q-card-section>
+          <div class="text-subtitle2 text-blue-grey-9 q-pb-sm">
+            Speaker:
+          </div>
+          <div class="q-gutter-sm">
+            <q-btn
+              no-caps
+              outline
+              rounded
+              color="blue-9"
+              icon="volume_up"
+              label="Test Speaker"
+              style="width: 140px"
+              class="full-width"
+            >
+              <template v-slot:loading>
+                <q-spinner-bars class="on-left" />
+                Recording...
+              </template>
+              <q-tooltip
+                content-class="bg-yellow-11 text-black"
+                anchor="top middle"
+                self="bottom middle"
+              >
+                Click Test Mic to make sure others can hear you!
+              </q-tooltip>
+            </q-btn>
+          </div>
+        </q-card-section>
         <q-card-actions align="right">
           <q-btn
             outline
@@ -59,8 +88,7 @@ export default {
   data() {
     return {
       isSpeakerOn: true,
-      status: "Listening...",
-      tab: ''
+      status: "Listening..."
     };
   },
   methods: {
