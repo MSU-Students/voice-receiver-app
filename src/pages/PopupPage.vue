@@ -44,6 +44,7 @@
           </div>
           <div class="q-gutter-sm">
             <q-btn
+              :loading="showAudioLoader"
               no-caps
               outline
               rounded
@@ -52,10 +53,11 @@
               label="Test Speaker"
               style="width: 140px"
               class="full-width"
+              @click="playSound()"
             >
               <template v-slot:loading>
-                <q-spinner-bars class="on-left" />
-                Recording...
+                <q-spinner-audio v-if="showAudioLoader" class="on-left" />
+                Playing...
               </template>
               <q-tooltip
                 content-class="bg-yellow-11 text-black"
@@ -75,7 +77,8 @@
             label="Manage Office Profile"
             to="/office"
             no-caps
-          />
+          >
+          </q-btn>
         </q-card-actions>
       </q-card>
     </div>
@@ -83,12 +86,14 @@
 </template>
 
 <script>
+import outputDeviceService from "src/services/output-device.service.js"
 export default {
   name: "PopupPage",
   data() {
     return {
       isSpeakerOn: true,
-      status: "Listening..."
+      status: "Listening...",
+      showAudioLoader: false
     };
   },
   methods: {
@@ -97,6 +102,12 @@ export default {
     },
     muteSpeaker() {
       return (this.isSpeakerOn = false);
+    },
+    async playSound() {
+      const audio = require('src/assets/audio/countdown.mp3');
+      this.showAudioLoader = true;
+      let sound = await outputDeviceService.playAudio(audio);
+      this.showAudioLoader = audio.playEnded;
     }
   }
 };
