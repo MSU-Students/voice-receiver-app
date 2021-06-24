@@ -18,10 +18,10 @@
       <q-icon size="35px" color="indigo" name="maps_home_work" />
     </q-item-section>
     <q-item-section>
-      <q-item-label class="text-red">
-        No College or Office Found!
+      <q-item-label class="text-red text-overline">
+         No College or Office Found!
       </q-item-label>
-      <q-item-label caption> Please register...</q-item-label>
+      <q-item-label caption> Please register. </q-item-label>
     </q-item-section>
   </q-item>
 </template>

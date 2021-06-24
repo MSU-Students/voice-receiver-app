@@ -1,5 +1,5 @@
 <template>
-  <q-page padding style="min-width: 440px">
+  <q-page padding style="min-width: 500px">
     <div class="q-pa-md">
       <q-card class="my-card" flat>
         <InstituitionProfile/>
