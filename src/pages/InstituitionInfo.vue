@@ -45,12 +45,17 @@
 
             <div>
               <q-btn
+                :loading="showSubmitLoader"
                 class="full-width"
                 outline
                 label="Submit"
                 type="submit"
                 color="indigo"
-              />
+              >
+              <template v-slot:loading>
+                <q-spinner-ios v-if="showSubmitLoader" class="on-left"/>
+              </template>
+              </q-btn>
             </div>
           </q-form>
         </q-card-section>
@@ -70,7 +75,8 @@ export default {
       area: {
         officeName: null,
         codeNum: null
-      }
+      },
+      showSubmitLoader: false
     };
   },
   mounted() {
@@ -82,11 +88,12 @@ export default {
 
   methods: {
     async onSubmit() {
-        areaProfileService.addProfile("area", this.area).then(() => {
+        this.showSubmitLoader = true;
+        await areaProfileService.addProfile("area", this.area).then(() => {
         setTimeout(() => {
           this.$router.replace("/popup");
-          this.notifyMessage("Welcome User!", "green-6")
-        }, 1000);
+          this.notifyMessage("Welcome to Voice Receiver!", "primary")
+        }, 2000);
         })
     },
 
@@ -99,8 +106,9 @@ export default {
       this.$q.notify({
         message: msg,
         color: color,
-        timeout: 300,
-        icon: "cloud_done"
+        timeout: 1000,
+        icon: "cloud_done",
+        position: 'center'
       })
     }
   }

@@ -65,7 +65,7 @@
                 anchor="top middle"
                 self="bottom middle"
               >
-                Click Test Mic to make sure others can hear you!
+                Click Test Speaker to make sure it working!
               </q-tooltip>
             </q-btn>
           </div>
