@@ -7,7 +7,7 @@
       <q-item-label> {{ officeDetails.officeName }}</q-item-label>
       <q-item-label caption> @{{ officeDetails.codeNum }}</q-item-label>
     </q-item-section>
-    <q-item-section>
+    <q-item-section>  
       <q-item-label>
         <q-badge outline color="red" label="Not connected"
       /></q-item-label>
@@ -19,9 +19,14 @@
     </q-item-section>
     <q-item-section>
       <q-item-label class="text-red text-overline">
-         No College or Office Found!
+        No College or Office Found!
       </q-item-label>
       <q-item-label caption> Please register. </q-item-label>
+    </q-item-section>
+    <q-item-section>
+      <q-item-label>
+        <q-badge outline color="red" label="Not connected"
+      /></q-item-label>
     </q-item-section>
   </q-item>
 </template>

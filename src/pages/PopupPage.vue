@@ -1,5 +1,5 @@
 <template>
-  <q-page padding style="min-width: 500px">
+  <q-page padding style="min-width: 570px">
     <div class="q-pa-md">
       <q-card class="my-card" flat>
         <InstituitionProfile/>
@@ -70,17 +70,6 @@
             </q-btn>
           </div>
         </q-card-section>
-        <q-card-actions align="right">
-          <q-btn
-            outline
-            icon="maps_home_work"
-            color="indigo"
-            label="Manage Office Profile" 
-            @click="() => $router.replace('/office')"
-            no-caps
-          >
-          </q-btn>
-        </q-card-actions>
       </q-card>
     </div>
   </q-page>

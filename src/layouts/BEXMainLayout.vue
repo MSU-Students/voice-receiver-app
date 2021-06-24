@@ -5,9 +5,17 @@
         <q-btn flat round dense icon="speaker" />
         <q-toolbar-title>Voice Receiver</q-toolbar-title>
         <q-space />
-        <q-badge color="white" text-color="blue-9">
-          v0.0.1
-        </q-badge>
+          <q-btn
+            class="text-overline"
+            outline
+            rounded
+            icon="maps_home_work"
+            color="white"
+            label="Edit Office Profile" 
+            @click="() => $router.replace('/office')"
+            no-caps
+          >
+          </q-btn>
       </q-toolbar>
     </q-header>
 
