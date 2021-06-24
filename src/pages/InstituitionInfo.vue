@@ -13,7 +13,7 @@
     <div class="q-pa-sm">
       <q-card class="my-card" flat>
         <q-card-section>
-          <q-item>
+          <!-- <q-item>
             <q-item-section avatar>
               <q-icon size="35px" color="indigo" name="maps_home_work" />
             </q-item-section>
@@ -21,7 +21,8 @@
               <q-item-label> {{ officeDetails.officeName }}</q-item-label>
               <q-item-label caption> @{{ officeDetails.codeNum }}</q-item-label>
             </q-item-section>
-          </q-item>
+          </q-item> -->
+          <InstituitionProfile/>
         </q-card-section>
         <q-separator />
         <q-card-section>
@@ -68,7 +69,10 @@
 </template>
 <script>
 import areaProfileService from "../services/area-profile.service.js";
+import InstituitionProfile from "src/components/InstituitionProfile.vue"
 export default {
+  name: 'InstituitionInfo',
+  components: {InstituitionProfile},
   data() {
     return {
       officeDetails: {},

@@ -74,8 +74,8 @@
             outline
             icon="maps_home_work"
             color="indigo"
-            label="Manage Office Profile"
-            to="/office"
+            label="Manage Office Profile" 
+            @click="() => $router.replace('/office')"
             no-caps
           >
           </q-btn>
