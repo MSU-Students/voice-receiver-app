@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import outputDeviceService from "src/services/output-device.service.js"
+import areaProfileService from "../services/area-profile.service.js"
 export default {
   name: 'InstituitionProfile',
   data() {

@@ -2,6 +2,7 @@
   <q-page padding style="min-width: 440px">
     <div class="q-pa-md">
       <q-card class="my-card" flat>
+        <InstituitionProfile/>
         <q-card-section v-if="isSpeakerOn" class="text-center">
           <q-btn
             class="shadow-13"
@@ -87,8 +88,10 @@
 
 <script>
 import outputDeviceService from "src/services/output-device.service.js"
+import InstituitionProfile from "src/components/InstituitionProfile.vue"
 export default {
   name: "PopupPage",
+  components: {InstituitionProfile},
   data() {
     return {
       isSpeakerOn: true,
