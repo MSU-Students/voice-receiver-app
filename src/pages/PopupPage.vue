@@ -50,6 +50,7 @@
               outlined
               label="Select Microphone"
               v-model="selectedDevice"
+              @input="setConnectedDevices($event)"
             />
             <q-btn
               :loading="showAudioLoader"
@@ -94,14 +95,15 @@ export default {
       status: "Listening...",
       showAudioLoader: false,
       speakers: [],
-      selectedDevice: ""
+      selectedDevice: "",
+      soundStreamSelected: undefined
     };
   },
 
   async created() {
     const devices = await outputDeviceService.devices();
     this.speakers = devices;
-    console.log('selected: ', this.selectedDevice = devices[0]);
+    this.selectedDevice = devices[0];
   },
 
   methods: {
@@ -116,6 +118,10 @@ export default {
       this.showAudioLoader = true;
       let sound = await outputDeviceService.playAudio(audio);
       this.showAudioLoader = audio.playEnded;
+    },
+    async setConnectedDevices(device) {
+      const selectedDevice = await outputDeviceService.setConnectedDevices(device);
+      this.soundStreamSelected = selectedDevice;
     }
   }
 };
