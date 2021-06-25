@@ -10,6 +10,11 @@ class OutputDeviceSevice {
           };
         });
       }
+    async devices() {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.enumerateDevices) {
+        throw(Error("UserMediaDetector getDevices failded: enumerateDevices is not support!"));
+      }
+    }
 }
 
 let outputDeviceService = new OutputDeviceSevice();

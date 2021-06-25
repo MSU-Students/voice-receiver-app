@@ -2,7 +2,8 @@
   <q-page padding style="min-width: 570px">
     <div class="q-pa-md">
       <q-card class="my-card" flat>
-        <InstituitionProfile/>
+        <InstituitionProfile />
+        <q-separator />
         <q-card-section v-if="isSpeakerOn" class="text-center">
           <q-btn
             class="shadow-13"
@@ -38,12 +39,18 @@
             Press to Unmute
           </div>
         </q-card-section>
-        <q-separator />
         <q-card-section>
           <div class="text-subtitle2 text-blue-grey-9 q-pb-sm">
             Speaker:
           </div>
           <div class="q-gutter-sm">
+            <q-select 
+            class="full-width" 
+            outlined 
+            label="Select Speaker"
+            v-model="selectDevice"
+            :options="speakers" 
+            />
             <q-btn
               :loading="showAudioLoader"
               no-caps
@@ -76,16 +83,18 @@
 </template>
 
 <script>
-import outputDeviceService from "src/services/output-device.service.js"
-import InstituitionProfile from "src/components/InstituitionProfile.vue"
+import outputDeviceService from "src/services/output-device.service.js";
+import InstituitionProfile from "src/components/InstituitionProfile.vue";
 export default {
   name: "PopupPage",
-  components: {InstituitionProfile},
+  components: { InstituitionProfile },
   data() {
     return {
       isSpeakerOn: true,
       status: "Listening...",
-      showAudioLoader: false
+      showAudioLoader: false,
+      speakers: [],
+      selectDevice: ""
     };
   },
   methods: {
@@ -96,7 +105,7 @@ export default {
       return (this.isSpeakerOn = false);
     },
     async playSound() {
-      const audio = require('src/assets/audio/countdown.mp3');
+      const audio = require("src/assets/audio/countdown.mp3");
       this.showAudioLoader = true;
       let sound = await outputDeviceService.playAudio(audio);
       this.showAudioLoader = audio.playEnded;
