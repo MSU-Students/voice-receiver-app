@@ -44,12 +44,12 @@
             Speaker:
           </div>
           <div class="q-gutter-sm">
-            <q-select 
-            class="full-width" 
-            outlined 
-            label="Select Speaker"
-            v-model="selectDevice"
-            :options="speakers" 
+            <q-select
+              class="full-width"
+              :options="speakers"
+              outlined
+              label="Select Microphone"
+              v-model="selectedDevice"
             />
             <q-btn
               :loading="showAudioLoader"
@@ -94,9 +94,16 @@ export default {
       status: "Listening...",
       showAudioLoader: false,
       speakers: [],
-      selectDevice: ""
+      selectedDevice: ""
     };
   },
+
+  async created() {
+    const devices = await outputDeviceService.devices();
+    this.speakers = devices;
+    console.log('selected: ', this.selectedDevice = devices[0]);
+  },
+
   methods: {
     onSpeaker() {
       return (this.isSpeakerOn = true);
