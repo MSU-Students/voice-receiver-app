@@ -116,13 +116,14 @@ export default {
     async playSound() {
       const audio = require("src/assets/audio/countdown.mp3");
       this.showAudioLoader = true;
-      let sound = await outputDeviceService.playAudio(audio);
+      await outputDeviceService.playAudio(audio);
       this.showAudioLoader = audio.playEnded;
     },
     async setConnectedDevices(device) {
-      const selectedDevice = await outputDeviceService.setConnectedDevices(device);
-      this.soundStreamSelected = selectedDevice;
-    }
+      await outputDeviceService.selectDevice(
+        device
+      );
+    },
   }
 };
 </script>
