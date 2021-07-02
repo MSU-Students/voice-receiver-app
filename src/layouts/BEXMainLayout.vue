@@ -11,7 +11,7 @@
             rounded
             icon="maps_home_work"
             color="white"
-            label="Edit Office Profile" 
+            label="Manage Office" 
             @click="() => $router.replace('/office')"
             no-caps
           >
