@@ -24,7 +24,19 @@ class ServerConnectionService {
       await this.stompClient.disconnect();
     }
   }
-  
+  async send(message) {
+    console.log("Send message: " + message);
+    if (this.stompClient && this.stompClient.connected) {
+      const msg = { name: message };
+      console.log(JSON.stringify(msg));
+      await this.stompClient.send("/app/hello", JSON.stringify(msg), {});
+    } else{
+      console.log('Not connected to server! ');
+    }
+  }
+  async tickleConnection() {
+    await this.isConnected ? this.disconnect() : this.connect();
+  }
 }
 
 let serverConnectionService = new ServerConnectionService();
