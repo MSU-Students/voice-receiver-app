@@ -19,6 +19,11 @@ class ServerConnectionService {
       }
     );
   }
+  async disconnect() {
+    if (this.stompClient) {
+      await this.stompClient.disconnect();
+    }
+  }
   
 }
 
