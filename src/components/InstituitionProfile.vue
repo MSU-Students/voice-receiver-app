@@ -79,8 +79,14 @@ export default {
   },
   methods: {
     async connectServer() {
-      await serverConnectionService.connect();
-      this.isConnected = true;
+      const connection = await serverConnectionService.connect();
+      console.log(connection);
+      if(connection != null) {
+        this.isConnected = true;
+      } else {
+        this.isConnected = false;
+        console.log('error!');
+      }
     },
 
     async disconnect() {
