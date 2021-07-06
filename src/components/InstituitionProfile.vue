@@ -28,7 +28,7 @@
         icon="toggle_on"
         color="green" 
         round
-        @click.prevent="connect"
+        @click.prevent="connectServer"
       >
         <template v-slot:loading>
           <q-spinner-ios v-if="showConnectLoader" />
@@ -57,6 +57,7 @@
 
 <script>
 import areaProfileService from "../services/area-profile.service.js";
+import serverConnectionService from "../services/server-connection.service.js"
 export default {
   name: "InstituitionProfile",
   data() {
@@ -77,14 +78,14 @@ export default {
     areaProfileService.isItemExist("area");
   },
   methods: {
-    async connect() {
+    async connectServer() {
       this.showConnectLoader = true;
       setTimeout(() => {
-        console.log('connecting...');
+        serverConnectionService.connect();
         this.isConnected = true;
-        console.log('conneced')
+        console.log('connected')
         this.showConnectLoader = false;
-      }, 2000)
+      }, 2000);
     },
 
     async disconnect() {
