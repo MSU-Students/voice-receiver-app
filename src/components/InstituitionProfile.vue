@@ -75,7 +75,6 @@ export default {
     this.getOfficeDetails();
   },
   created() {
-    serverConnectionService.send("Hi S!");
     areaProfileService.isItemExist("area");
   },
   methods: {
