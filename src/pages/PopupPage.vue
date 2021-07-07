@@ -4,6 +4,22 @@
       <q-card class="my-card" flat>
         <InstituitionProfile />
         <q-separator />
+        <q-card-actions>
+          <div class="q-gutter-sm">
+            <q-btn
+              align="left"
+              class="btn-fixed-width"
+              color="primary"
+              label="Align to left"
+            />
+            <q-btn
+              align="right"
+              class="btn-fixed-width"
+              color="secondary"
+              label="Align to right"
+            />
+          </div>
+        </q-card-actions>
         <q-card-section v-if="isSpeakerOn" class="text-center">
           <q-btn
             class="shadow-13"
@@ -120,10 +136,8 @@ export default {
       this.showAudioLoader = audio.playEnded;
     },
     async setConnectedDevices(device) {
-      await outputDeviceService.selectDevice(
-        device
-      );
-    },
+      await outputDeviceService.selectDevice(device);
+    }
   }
 };
 </script>

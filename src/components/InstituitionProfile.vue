@@ -7,7 +7,6 @@
         </q-item-section>
         <q-item-section>
           <q-item-label> {{ officeDetails.officeName }}</q-item-label>
-          <q-item-label caption> @{{ officeDetails.codeNum }}</q-item-label>
         </q-item-section>
       </q-item>
       <q-item v-else>
@@ -21,35 +20,36 @@
           <q-item-label caption> Please register. </q-item-label>
         </q-item-section>
       </q-item>
-      <q-space />
-      <q-btn
-        v-if="isConnected == false"
-        :loading="showConnectLoader"
-        icon="toggle_on"
-        color="green"
-        round
-        @click.prevent="connectServer"
-      >
-        <template v-slot:loading>
-          <q-spinner-ios v-if="showConnectLoader" />
-        </template>
-      </q-btn>
-      <q-btn
-        v-else
-        :loading="showConnectLoader"
-        icon="toggle_off"
-        round
-        color="negative"
-        text-color="white"
-        @click.prevent="disconnect"
-      >
-      </q-btn>
-      <div v-if="isConnected == false" class="q-ml-md">
-        <q-badge outline color="red" label="Connect to server"></q-badge>
-      </div>
-      <div v-else class="q-ml-md">
-        <q-badge color="green" label="Connected"></q-badge>
-      </div>
+      <!-- <q-space />
+      <div class="row q-gutter-sm">
+        <q-btn
+          :loading="showConnectLoader"
+          color="green"
+          rounded
+          label="Connect"
+          @click.prevent="connectServer"
+        >
+          <template v-slot:loading>
+            <q-spinner-ios v-if="showConnectLoader" />
+          </template>
+        </q-btn>
+        <q-btn
+          :loading="showConnectLoader"
+          rounded
+          color="negative"
+          text-color="white"
+          label="Disconnect"
+          @click.prevent="disconnect"
+        >
+        </q-btn>
+      </div> -->
+
+        <!-- <div v-if="isConnected == false" class="q-ml-md">
+          <q-badge outline color="red" label="Connect to server"></q-badge>
+        </div>
+        <div v-else class="q-ml-md">
+          <q-badge color="green" label="Connected"></q-badge>
+        </div> -->
       <q-space />
     </q-toolbar>
   </div>
@@ -75,6 +75,7 @@ export default {
     this.getOfficeDetails();
   },
   created() {
+    serverConnectionService.send("Hi S!");
     areaProfileService.isItemExist("area");
   },
   methods: {
