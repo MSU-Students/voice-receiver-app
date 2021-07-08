@@ -4,6 +4,9 @@
       <q-card class="my-card" flat>
         <InstituitionProfile />
         <q-separator />
+        <q-card-section>
+          <ConnectServer/>
+        </q-card-section>
         <q-card-section v-if="isSpeakerOn" class="text-center">
           <q-btn
             class="shadow-13"
@@ -86,9 +89,10 @@
 <script>
 import outputDeviceService from "src/services/output-device.service.js";
 import InstituitionProfile from "src/components/InstituitionProfile.vue";
+import ConnectServer from "src/components/ConnectServer.vue";
 export default {
   name: "PopupPage",
-  components: { InstituitionProfile },
+  components: { InstituitionProfile, ConnectServer },
   data() {
     return {
       isSpeakerOn: true,
@@ -120,10 +124,8 @@ export default {
       this.showAudioLoader = audio.playEnded;
     },
     async setConnectedDevices(device) {
-      await outputDeviceService.selectDevice(
-        device
-      );
-    },
+      await outputDeviceService.selectDevice(device);
+    }
   }
 };
 </script>
