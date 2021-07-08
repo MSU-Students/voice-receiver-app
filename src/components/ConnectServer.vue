@@ -33,15 +33,18 @@ export default {
   },
   methods: {
     async connectServer() {
-        try {
-        const res = await serverConnectionService.connect();
-          this.isDisableConnect = true;
-          this.isDisableDisconnect = false;
-          this.isConnected = true;
-      } catch (error) {
+      const res = await serverConnectionService.connect();
+      console.log('omair', res);
+      if ((res != undefined)) {
+        this.notifyMessage("Connected to the server", "green-6");
+        this.isDisableConnect = true;
+        this.isDisableDisconnect = false;
+        this.isConnected = true;
+      } else {
         this.isDisableConnect = false;
-        this.isDisableDisconnect = true;  
-        console.log("ERROR");
+        this.isDisableDisconnect = true;
+        this.isConnected = false;
+        this.notifyMessage("Can't connect to the server.", "red");
       }
     },
 
@@ -50,6 +53,16 @@ export default {
       this.isDisableConnect = false;
       this.isDisableDisconnect = true;
       await serverConnectionService.disconnect();
+    },
+
+    notifyMessage(msg, color) {
+      this.$q.notify({
+        message: msg,
+        color: color,
+        timeout: 1000,
+        icon: "error",
+        position: "center"
+      });
     }
   }
 };

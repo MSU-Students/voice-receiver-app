@@ -3,8 +3,8 @@ import Stomp from "webstomp-client";
 
 class ServerConnectionService {
   async connect() {
-    return new Promise(resolve, reject => {
-      this.socket = new SockJS("http://192.168.1.244:9000/ws");
+    return new Promise(resolve => {
+      this.socket = new SockJS("http://192.168.43.149:9000/ws");
       this.stompClient = Stomp.over(this.socket);
       const stomp = this.stompClient.connect(
         {},
@@ -15,7 +15,7 @@ class ServerConnectionService {
           });
         },
         error => {
-          reject(error);
+          //reject(error);
           console.log("Cannot connect to server.");
         }
       );
