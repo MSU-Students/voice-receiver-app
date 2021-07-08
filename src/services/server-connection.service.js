@@ -3,21 +3,23 @@ import Stomp from "webstomp-client";
 
 class ServerConnectionService {
   async connect() {
-    this.socket = new SockJS("http://192.168.1.244:9000/ws");
-    this.stompClient = Stomp.over(this.socket);
-    await this.stompClient.connect(
-      {},
-      frame => {
-        console.log(frame);
-        this.stompClient.subscribe("/topic/announcements", tick => {
-          console.log(tick);
-        });
-      },
-      error => {
-        console.log(error);
-        console.log("Cannot connect to server.");
-      }
-    );
+    return new Promise(resolve, reject => {
+      this.socket = new SockJS("http://192.168.1.244:9000/ws");
+      this.stompClient = Stomp.over(this.socket);
+      const stomp = this.stompClient.connect(
+        {},
+        frame => {
+          resolve(frame);
+          this.stompClient.subscribe("/topic/announcements", tick => {
+            console.log(tick);
+          });
+        },
+        error => {
+          reject(error);
+          console.log("Cannot connect to server.");
+        }
+      );
+    });
   }
   async disconnect() {
     if (this.stompClient) {
@@ -30,12 +32,12 @@ class ServerConnectionService {
       const msg = { name: message };
       console.log(JSON.stringify(msg));
       await this.stompClient.send("/app/information", JSON.stringify(msg), {});
-    } else{
-      console.log('Not connected to server! ');
+    } else {
+      console.log("Not connected to server! ");
     }
   }
   async tickleConnection() {
-    await this.isConnected ? this.disconnect() : this.connect();
+    (await this.isConnected) ? this.disconnect() : this.connect();
   }
 }
 

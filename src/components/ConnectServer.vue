@@ -33,10 +33,16 @@ export default {
   },
   methods: {
     async connectServer() {
-      this.isDisableConnect = true;
-      this.isDisableDisconnect = false;
-      await serverConnectionService.connect();
-      this.isConnected = true;
+        try {
+        const res = await serverConnectionService.connect();
+          this.isDisableConnect = true;
+          this.isDisableDisconnect = false;
+          this.isConnected = true;
+      } catch (error) {
+        this.isDisableConnect = false;
+        this.isDisableDisconnect = true;  
+        console.log("ERROR");
+      }
     },
 
     async disconnect() {
