@@ -11,7 +11,11 @@ class ServerConnectionService {
         frame => {
           resolve(frame);
           this.stompClient.subscribe("/topic/announcements", tick => {
-            console.log(tick);
+            let buffer = JSON.parse(tick.body);
+            console.log(buffer.content.split(","));
+            let arrayBuffer = buffer.content.split(",");
+            var snd = new Audio("data:audio/wav;base64," + arrayBuffer[1]);
+            snd.play();
           });
         },
         error => {
