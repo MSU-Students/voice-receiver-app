@@ -13,5 +13,5 @@ jobs:
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_VOICE_CASTER }}'
-          projectId: voice-caster
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_VOICE_RECEIVER }}'
+          projectId: voice-receiver
