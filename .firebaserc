@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "voice-caster"
+  },
+  "targets": {
+    "voice-caster": {
+      "hosting": {
+        "voice-receiver": [
+          "voice-receiver"
+        ]
+      }
+    }
+  }
+}
