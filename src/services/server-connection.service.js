@@ -4,7 +4,7 @@ import Stomp from "webstomp-client";
 class ServerConnectionService {
   async connect() {
     return new Promise(resolve => {
-      this.socket = new SockJS("http://192.168.43.149:9000/ws");
+      this.socket = new SockJS("https://voice-serve.herokuapp.com/ws");
       this.stompClient = Stomp.over(this.socket);
       const stomp = this.stompClient.connect(
         {},
