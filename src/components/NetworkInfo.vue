@@ -1,34 +1,34 @@
 <template>
   <div class="q-pa-md">
-    <q-form  class="q-gutter-md">
+    <q-form @submit="save()" class="q-gutter-md">
       <q-input
+        dense
         filled
-        v-model="ipAddress"
+        v-model="server.ipAddress"
         label="IP Address"
         hint="ex. 192.168.100.1"
         lazy-rules
         :rules="[val => (val && val.length > 0) || 'Please type something.']"
       />
 
-      <q-input
+      <q-input 
+        dense
         filled
         type="number"
-        v-model="port"
+        v-model="server.port"
         label="Port"
         hint="ex. 8080"
         lazy-rules
         :rules="[
-          val => (val !== null && val !== '') || 'Please type the code #.',
-          val => (val > 0 && val < 1001) || 'Invalid code Num.'
+          val => (val !== null && val !== '') || 'Please type the code #.'
         ]"
       />
 
       <div>
         <q-btn
           :loading="showSubmitLoader"
-          class="full-width"
-          outline
-          label="Submit"
+          class="full-width"    
+          label="Save"
           type="submit"
           color="indigo"
         >
@@ -41,12 +41,25 @@
   </div>
 </template>
 <script>
+import serverConnectionService from "../services/server-connection.service.js"
 export default {
     data() {
         return {
             showSubmitLoader: false,
-            ipAddress: '',
-            port: ''
+            server: {
+                ipAddress: '',
+                port: ''
+            },
+        }
+    },
+    methods: {
+        async save() {
+            this.showSubmitLoader = true;
+            await serverConnectionService.addServerIP("server_ip", this.server).then(() => {
+                setTimeout(() => {
+                    this.$router.replace("/popup");
+                })
+            })
         }
     }
 }
