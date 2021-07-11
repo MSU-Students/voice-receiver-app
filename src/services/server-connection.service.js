@@ -2,11 +2,12 @@ import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
 class ServerConnectionService {
-  async connect() {
+  async connect(ip, port) {
     return new Promise(resolve => {
-      const ip = "192.168.137.1";
+      // const ip = "192.168.137.1";
+      // const port = "9000";
       const live = "https://voice-serve.herokuapp.com/ws";
-      const dev = `http://${ip}:9000/ws`;
+      const dev = `http://${ip}:${port}/ws`;
       this.socket = new SockJS(dev);
       this.stompClient = Stomp.over(this.socket);
       const stomp = this.stompClient.connect(
