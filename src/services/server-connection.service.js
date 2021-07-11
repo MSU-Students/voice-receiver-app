@@ -4,7 +4,10 @@ import Stomp from "webstomp-client";
 class ServerConnectionService {
   async connect() {
     return new Promise(resolve => {
-      this.socket = new SockJS("https://voice-serve.herokuapp.com/ws");
+      const ip = "192.168.137.1"
+      const live = "https://voice-serve.herokuapp.com/ws";
+      const dev = `http://${ip}:9000/ws`;
+      this.socket = new SockJS(dev);
       this.stompClient = Stomp.over(this.socket);
       const stomp = this.stompClient.connect(
         {},
@@ -16,6 +19,10 @@ class ServerConnectionService {
             let arrayBuffer = buffer.content.split(",");
             var snd = new Audio("data:audio/wav;base64," + arrayBuffer[1]);
             snd.play();
+          });
+          this.stompClient.subscribe("/topic/register", tick => {
+            let buffer = JSON.parse(tick.body);
+            console.log(buffer);
           });
         },
         error => {
@@ -40,6 +47,17 @@ class ServerConnectionService {
       console.log("Not connected to server! ");
     }
   }
+
+  async sendData() {
+    if (this.stompClient && this.stompClient.connected) {
+      const msg = { institution: "CIT", code: "1234", status: "online" };
+      console.log(JSON.stringify(msg));
+      await this.stompClient.send("/app/institution", JSON.stringify(msg), {});
+    } else {
+      console.log("Not connected to server! ");
+    }
+  }
+
   async tickleConnection() {
     (await this.isConnected) ? this.disconnect() : this.connect();
   }

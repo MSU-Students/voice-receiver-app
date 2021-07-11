@@ -1,6 +1,22 @@
 <template>
   <div class="q-gutter-xs row item-start">
-    <q-input filled v-model="ipAddress" label="Server IP Address" dense/>  
+    <q-btn
+      color="blue-9"
+      label="Enter IP Address"
+      size="10px"
+      no-caps
+      class="btn-fixed-width"
+    >
+      <q-menu>
+        <div class="row no-wrap q-pa-md">
+          <div class="column">
+            <div class="text-h6 q-mb-md">Manage Network</div>
+            <q-separator/>
+            <NetworkInfo />
+          </div>
+        </div>
+      </q-menu>
+    </q-btn>
     <q-btn
       :disable="isDisableConnect"
       align="left"
@@ -22,22 +38,23 @@
 </template>
 <script>
 import serverConnectionService from "../services/server-connection.service.js";
+import NetworkInfo from "../components/NetworkInfo.vue";
 export default {
   name: "ConnectServer",
+  components: {NetworkInfo},
   data() {
     return {
       showConnectLoader: false,
       isConnected: false,
       isDisableConnect: false,
-      isDisableDisconnect: true,
-      ipAddress: ""
+      isDisableDisconnect: true
     };
   },
   methods: {
     async connectServer() {
       const res = await serverConnectionService.connect();
-      console.log('omair', res);
-      if ((res != undefined)) {
+      console.log("omair", res);
+      if (res != undefined) {
         this.notifyMessage("Connected to the server", "green-6");
         this.isDisableConnect = true;
         this.isDisableDisconnect = false;
