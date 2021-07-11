@@ -1,5 +1,6 @@
 <template>
-  <div class="q-gutter-xs">
+  <div class="q-gutter-xs row item-start">
+    <q-input filled v-model="ipAddress" label="Server IP Address" dense/>  
     <q-btn
       :disable="isDisableConnect"
       align="left"
@@ -28,7 +29,8 @@ export default {
       showConnectLoader: false,
       isConnected: false,
       isDisableConnect: false,
-      isDisableDisconnect: true
+      isDisableDisconnect: true,
+      ipAddress: ""
     };
   },
   methods: {

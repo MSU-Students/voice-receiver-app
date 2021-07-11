@@ -1,6 +1,6 @@
 <template>
   <q-page padding style="min-width: 570px">
-    <div class="q-pa-md">
+    <div class="q-pa-sm">
       <q-card class="my-card" flat>
         <InstituitionProfile />
         <q-separator />
