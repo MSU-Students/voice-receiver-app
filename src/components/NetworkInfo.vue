@@ -4,7 +4,7 @@
       <q-input
         dense
         filled
-        v-model="server.ipAddress"
+        v-model="server_ip.ipAddress"
         label="IP Address"
         hint="ex. 192.168.100.1"
         lazy-rules
@@ -15,12 +15,12 @@
         dense
         filled
         type="number"
-        v-model="server.port"
+        v-model="server_ip.port"
         label="Port"
         hint="ex. 8080"
         lazy-rules
         :rules="[
-          val => (val !== null && val !== '') || 'Please type the code #.'
+          val => (val !== null && val !== '') || 'Please type port #.'
         ]"
       />
 
@@ -50,17 +50,27 @@ export default {
                 ipAddress: '',
                 port: ''
             },
+            server_ip: {}
         }
+    },
+    mounted() {
+        this.getIP();    
     },
     methods: {
         async save() {
             this.showSubmitLoader = true;
-            await serverConnectionService.addServerIP("server_ip", this.server).then(() => {
+            await serverConnectionService.addServerIP("server_ip", this.server_ip).then(() => {
                 setTimeout(() => {
-                    this.$router.replace("/popup");
-                })
+                    this.showSubmitLoader = false;
+                }, 2000)
             })
+        },
+        async getIP() {
+            const ip = await serverConnectionService.getIpAddress();
+            this.server_ip = ip;
+            console.log('port', this.server_ip.port);
         }
+    
     }
 }
 </script>

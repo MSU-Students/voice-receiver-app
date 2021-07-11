@@ -75,9 +75,9 @@ class ServerConnectionService {
     let ip = JSON.stringify(val);
     return await localStorage.setItem(key, ip);
   }
-  async getOfficeDetails() {
-    let currentOffice = JSON.parse(localStorage.getItem("server_ip"));
-    return await currentOffice;
+  async getIpAddress() {
+    let ip = JSON.parse(localStorage.getItem("server_ip"));
+    return await ip;
   }
 
 }
