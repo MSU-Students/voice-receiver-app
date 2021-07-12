@@ -44,7 +44,7 @@
         </q-btn>
       </div> -->
 
-        <!-- <div v-if="isConnected == false" class="q-ml-md">
+      <!-- <div v-if="isConnected == false" class="q-ml-md">
           <q-badge outline color="red" label="Connect to server"></q-badge>
         </div>
         <div v-else class="q-ml-md">

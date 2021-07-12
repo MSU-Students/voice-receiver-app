@@ -1,9 +1,9 @@
 <template>
-  <q-page padding style="min-width: 570px">
-    <div class="q-pa-md">
+  <q-page padding :style="$q.screen.lt.md ? 'min-width: 570px' : ''">
+    <div class="q-pa-sm">
+      <InstituitionProfile />
       <q-card class="my-card" flat>
-        <InstituitionProfile />
-        <q-separator />
+      <q-separator />
         <q-card-section>
           <ConnectServer/>
         </q-card-section>

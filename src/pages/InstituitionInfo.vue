@@ -9,11 +9,13 @@
         <strong>Instituition</strong> Info
       </q-toolbar-title>
     </q-toolbar>
-
     <div class="q-pa-sm">
       <q-card class="my-card" flat>
         <q-card-section>
-          <InstituitionProfile/>
+          <InstituitionProfile />
+        </q-card-section>
+        <q-card-section>
+          <ConnectServer />
         </q-card-section>
         <q-separator />
         <q-card-section>
@@ -52,9 +54,9 @@
                 type="submit"
                 color="indigo"
               >
-              <template v-slot:loading>
-                <q-spinner-ios v-if="showSubmitLoader" class="on-left"/>
-              </template>
+                <template v-slot:loading>
+                  <q-spinner-ios v-if="showSubmitLoader" class="on-left" />
+                </template>
               </q-btn>
             </div>
           </q-form>
@@ -65,10 +67,12 @@
 </template>
 <script>
 import areaProfileService from "../services/area-profile.service.js";
-import InstituitionProfile from "src/components/InstituitionProfile.vue"
+import InstituitionProfile from "src/components/InstituitionProfile.vue";
+import ConnectServer from "src/components/ConnectServer.vue";
+import serverConnection from "src/services/server-connection.service";
 export default {
-  name: 'InstituitionInfo',
-  components: {InstituitionProfile},
+  name: "InstituitionInfo",
+  components: { InstituitionProfile, ConnectServer },
   data() {
     return {
       officeDetails: {},
@@ -83,18 +87,19 @@ export default {
     this.getOfficeDetails();
   },
   created() {
-    areaProfileService.isItemExist("area");    
+    areaProfileService.isItemExist("area");
   },
 
   methods: {
     async onSubmit() {
-        this.showSubmitLoader = true;
-        await areaProfileService.addProfile("area", this.area).then(() => {
+      serverConnection.sendData();
+      this.showSubmitLoader = true;
+      await areaProfileService.addProfile("area", this.area).then(() => {
         setTimeout(() => {
           this.$router.replace("/popup");
-          this.notifyMessage("Welcome to Voice Receiver!", "primary")
+          this.notifyMessage("Welcome to Voice Receiver!", "primary");
         }, 2000);
-        })
+      });
     },
 
     async getOfficeDetails() {
@@ -108,8 +113,8 @@ export default {
         color: color,
         timeout: 1000,
         icon: "cloud_done",
-        position: 'center'
-      })
+        position: "center"
+      });
     }
   }
 };
