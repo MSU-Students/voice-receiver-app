@@ -10,7 +10,9 @@
       <q-menu>
         <div class="row no-wrap q-pa-md">
           <div class="column">
-            <div class="text-weight-bold q-mb-md"> <q-icon name="dns" size="20px"/> Server Setting</div>
+            <div class="text-weight-bold q-mb-md">
+              <q-icon name="dns" size="20px" /> Server Setting
+            </div>
             <q-separator />
             <NetworkInfo />
           </div>
@@ -34,6 +36,12 @@
       size="10px"
       @click.prevent="disconnect"
     />
+    <div v-if="isConnected == false" class="q-ml-md">
+      <q-badge outline color="red" label="Not connected"></q-badge>
+    </div>
+    <div v-else class="q-ml-md">
+      <q-badge color="green" label="Connected"></q-badge>
+    </div>
   </div>
 </template>
 <script>
@@ -54,6 +62,9 @@ export default {
   mounted() {
     this.getIP();
   },
+  created() {
+    this.getIP();
+  },
   methods: {
     async getIP() {
       const ip = await serverConnectionService.getIpAddress();
@@ -61,9 +72,12 @@ export default {
       console.log(this.server_ip);
     },
     async connectServer() {
-      const res = await serverConnectionService.connect(this.server_ip.ipAddress, this.server_ip.port);
+      const res = await serverConnectionService.connect(
+        this.server_ip.ipAddress,
+        this.server_ip.port
+      );
       console.log("omair", res);
-      if (res != undefined) {
+      if (res.type != "close") {
         this.notifyMessage("Connected to the server", "green-6");
         this.isDisableConnect = true;
         this.isDisableDisconnect = false;

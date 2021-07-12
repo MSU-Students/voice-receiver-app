@@ -25,7 +25,7 @@
         <q-btn
           :loading="showSubmitLoader"
           class="full-width"
-          label="Save"
+          label="Connect"
           type="submit"
           color="indigo"
         >
@@ -57,25 +57,32 @@ export default {
         .addServerIP("server_ip", this.server_ip)
         .then(() => {
           setTimeout(() => {
-            this.notifyMessage("IP and PORT saved!", "green");
+            this.connectServer();
             this.showSubmitLoader = false;
           }, 2000);
         });
     },
+    async connectServer() {
+      const res = await serverConnectionService.connect(
+        this.server_ip.ipAddress,
+        this.server_ip.port
+      );
+      console.log("omair", res);
+      if (res.type != "close") {
+        this.notifyMessage("Connected to the server", "green-6");
+        this.isDisableConnect = true;
+        this.isDisableDisconnect = false;
+        this.isConnected = true;
+      } else {
+        this.isDisableConnect = false;
+        this.isDisableDisconnect = true;
+        this.isConnected = false;
+        this.notifyMessage("Can't connect to the server.", "red");
+      }
+    },
     async getIP() {
       const ip = await serverConnectionService.getIpAddress();
       this.server_ip = ip;
-      console.log("port", this.server_ip.port);
-    },
-
-    notifyMessage(msg, color) {
-      this.$q.notify({
-        message: msg,
-        color: color,
-        timeout: 1000,
-        icon: "check_circle",
-        position: "center"
-      });
     }
   }
 };

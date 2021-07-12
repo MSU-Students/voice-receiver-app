@@ -20,12 +20,6 @@
           <q-item-label caption> Please register. </q-item-label>
         </q-item-section>
       </q-item>
-      <div v-if="isConnected == false" class="q-ml-md">
-        <q-badge outline color="red" label="Connect to server"></q-badge>
-      </div>
-      <div v-else class="q-ml-md">
-        <q-badge color="green" label="Connected"></q-badge>
-      </div>
       <!-- <q-space />
       <div class="row q-gutter-sm">
         <q-btn

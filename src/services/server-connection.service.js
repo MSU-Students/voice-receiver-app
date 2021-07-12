@@ -3,9 +3,7 @@ import Stomp from "webstomp-client";
 
 class ServerConnectionService {
   async connect(ip, port) {
-    return new Promise(resolve => {
-      // const ip = "192.168.137.1";
-      // const port = "9000";
+    return new Promise((resolve, reject) => {
       const live = "https://voice-serve.herokuapp.com/ws";
       const dev = `http://${ip}:${port}/ws`;
       this.socket = new SockJS(dev);
@@ -27,7 +25,7 @@ class ServerConnectionService {
           });
         },
         error => {
-          //reject(error);
+          resolve(error);
           console.log("Cannot connect to server.");
         }
       );
