@@ -20,13 +20,18 @@
       </q-menu>
     </q-btn>
     <q-btn
+      :loading="showConnectLoader"
       :disable="isDisableConnect"
       align="left"
       class="btn-fixed-width"
       label="connect server"
       size="10px"
       @click.prevent="connectServer"
-    />
+    >
+      <template v-slot:loading>
+        connecting...
+      </template>
+    </q-btn>
     <q-btn
       :disable="isDisableDisconnect"
       align="right"
@@ -72,21 +77,28 @@ export default {
       console.log(this.server_ip);
     },
     async connectServer() {
+      this.showConnectLoader = true;
       const res = await serverConnectionService.connect(
         this.server_ip.ipAddress,
         this.server_ip.port
       );
       console.log("omair", res);
       if (res.type != "close") {
-        this.notifyMessage("Connected to the server", "green-6");
-        this.isDisableConnect = true;
-        this.isDisableDisconnect = false;
-        this.isConnected = true;
+        setTimeout(() => {
+          this.notifyMessage("Connected to the server", "green-6");
+          this.isDisableConnect = true;
+          this.isDisableDisconnect = false;
+          this.isConnected = true;
+          this.showConnectLoader = false;
+        }, 2000);
       } else {
-        this.isDisableConnect = false;
-        this.isDisableDisconnect = true;
-        this.isConnected = false;
-        this.notifyMessage("Can't connect to the server.", "red");
+        setTimeout(() => {
+          this.isDisableConnect = false;
+          this.isDisableDisconnect = true;
+          this.isConnected = false;
+          this.showConnectLoader = false;
+          this.notifyMessage("Can't connect to the server.", "red");
+        }, 2000);
       }
     },
 
