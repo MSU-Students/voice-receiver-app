@@ -1,25 +1,6 @@
 <template>
   <div class="q-gutter-xs row item-start">
     <q-btn
-      color="blue-9"
-      label="Set IP Address"
-      size="10px"
-      no-caps
-      class="btn-fixed-width"
-    >
-      <q-menu>
-        <div class="row no-wrap q-pa-md">
-          <div class="column">
-            <div class="text-weight-bold q-mb-md">
-              <q-icon name="dns" size="20px" /> Server Setting
-            </div>
-            <q-separator />
-            <NetworkInfo />
-          </div>
-        </div>
-      </q-menu>
-    </q-btn>
-    <q-btn
       :loading="showConnectLoader"
       :disable="isDisableConnect"
       align="left"
@@ -51,10 +32,8 @@
 </template>
 <script>
 import serverConnectionService from "../services/server-connection.service.js";
-import NetworkInfo from "../components/NetworkInfo.vue";
 export default {
   name: "ConnectServer",
-  components: { NetworkInfo },
   data() {
     return {
       showConnectLoader: false,
@@ -69,6 +48,7 @@ export default {
   },
   created() {
     this.getIP();
+      serverConnectionService.isItemExist("server_ip");
   },
   methods: {
     async getIP() {
@@ -82,7 +62,6 @@ export default {
         this.server_ip.ipAddress,
         this.server_ip.port
       );
-      console.log("omair", res);
       if (res.type != "close") {
         setTimeout(() => {
           this.notifyMessage("Connected to the server", "green-6");
