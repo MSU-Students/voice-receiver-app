@@ -20,6 +20,15 @@
           <q-item-label caption> Please register. </q-item-label>
         </q-item-section>
       </q-item>
+      <q-space />
+      <q-item>
+        <q-item-section>
+          <q-item-label caption>
+            Server IP: {{ server_ip.ipAddress }}
+          </q-item-label>
+          <q-item-label caption> Port: {{ server_ip.port }} </q-item-label>
+        </q-item-section>
+      </q-item>
       <!-- <q-space />
       <div class="row q-gutter-sm">
         <q-btn
@@ -68,11 +77,13 @@ export default {
         codeNum: null
       },
       showConnectLoader: false,
-      isConnected: false
+      isConnected: false,
+      server_ip: {}
     };
   },
   mounted() {
     this.getOfficeDetails();
+    this.getIP();
   },
   created() {
     areaProfileService.isItemExist("area");
@@ -91,7 +102,11 @@ export default {
     async getOfficeDetails() {
       const officeProfile = await areaProfileService.getOfficeDetails();
       this.officeDetails = officeProfile;
-      console.log("length: ", this.officeDetails.length);
+    },
+    async getIP() {
+      const ip = await serverConnectionService.getIpAddress();
+      this.server_ip = ip;
+      console.log(this.server_ip);
     }
   }
 };
