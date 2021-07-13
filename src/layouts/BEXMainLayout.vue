@@ -27,7 +27,7 @@
         <q-toolbar class="bg-white">
           <q-toolbar-title>
             <div class="text-overline text-blue-grey">
-              MSU Marawi Public Address System
+              MSU Marawi PA System | Developed by Omair M.
             </div>
             </q-toolbar-title>
         </q-toolbar>

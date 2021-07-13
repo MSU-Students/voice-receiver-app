@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>
-          Quasar App
+          Voice Caster app
         </q-toolbar-title>
 
         <div></div>
