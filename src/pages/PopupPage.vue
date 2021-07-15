@@ -90,6 +90,7 @@
 import outputDeviceService from "src/services/output-device.service.js";
 import InstituitionProfile from "src/components/InstituitionProfile.vue";
 import ConnectServer from "src/components/ConnectServer.vue";
+import serverConnectionService from "../services/server-connection.service.js"
 export default {
   name: "PopupPage",
   components: { InstituitionProfile, ConnectServer },
