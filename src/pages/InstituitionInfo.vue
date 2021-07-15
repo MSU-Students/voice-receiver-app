@@ -168,7 +168,6 @@ export default {
         .then(() => {
           setTimeout(() => {
             this.showSaveLoader = false;
-            this.$router.replace("/popup");
             this.notifyMessage("IP Address and Port configured!", "green");
           }, 2000);
         });
