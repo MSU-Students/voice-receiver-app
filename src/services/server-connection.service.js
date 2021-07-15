@@ -1,7 +1,7 @@
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
-let index = 0;
+let bufferArray = [];
 class ServerConnectionService {
   async connect(ip, port) {
     return new Promise((resolve, reject) => {
@@ -15,9 +15,10 @@ class ServerConnectionService {
           resolve(frame);
           this.stompClient.subscribe("/topic/announcements", async tick => {
             let buffer = JSON.parse(tick.body);
-            // const message = buffer.content.split(",");
-            const message = buffer.content;
-            this.play(message);
+            const message = buffer.content.split(",");
+            console.log("message 1", message[1]);
+            // const message = buffer.content;
+            this.play(message[1]);
           });
           this.stompClient.subscribe("/topic/register", tick => {
             let buffer = JSON.parse(tick.body);
@@ -35,10 +36,10 @@ class ServerConnectionService {
   async play(message) {
     await this.player;
     this.player = new Promise(resolve => {
-      console.log("omair: ", message.data);
-      var announce = new Audio("data:audio/wav;base64," + message.data);
+      var announce = new Audio("data:audio/wav;base64," + message);
       announce.play();
       announce.onended = resolve;
+      announce.onerror = resolve;
     });
   }
   async disconnect() {
@@ -47,11 +48,9 @@ class ServerConnectionService {
     }
   }
 
-  async sendData() {
+  async sendData(clientInfo) {
     if (this.stompClient && this.stompClient.connected) {
-      const msg = { institution: "CIT", code: "1234", status: "online" };
-      //console.log(JSON.stringify(msg));
-      await this.stompClient.send("/app/instituition", JSON.stringify(msg), {});
+      await this.stompClient.send("/app/instituition", JSON.stringify(clientInfo), {});
     } else {
       console.log("Not connected to server! ");
     }

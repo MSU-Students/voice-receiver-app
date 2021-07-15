@@ -69,7 +69,7 @@
             <q-form @submit="onSubmit" class="q-gutter-md">
               <q-input
                 filled
-                v-model="area.officeName"
+                v-model="area.client"
                 label="College/Office Name"
                 hint="ex. Office of the Registrar"
                 lazy-rules
@@ -81,7 +81,7 @@
               <q-input
                 filled
                 type="number"
-                v-model="area.codeNum"
+                v-model="area.code"
                 label="Code #."
                 hint="ex. 1001"
                 lazy-rules
@@ -97,7 +97,7 @@
                   :loading="showSubmitLoader"
                   class="full-width"
                   outline
-                  label="Submit"
+                  label="Send"
                   type="submit"
                   color="indigo"
                 >
@@ -123,8 +123,9 @@ export default {
     return {
       officeDetails: {},
       area: {
-        officeName: null,
-        codeNum: null
+        client: null,
+        code: null,
+        status: "Online"
       },
       showSubmitLoader: false,
       showSaveLoader: false,
@@ -145,11 +146,11 @@ export default {
 
   methods: {
     async onSubmit() {
-      serverConnection.sendData();
       this.showSubmitLoader = true;
       await areaProfileService.addProfile("area", this.area).then(() => {
         setTimeout(() => {
           this.$router.replace("/popup");
+          serverConnection.sendData(this.area);
           this.notifyMessage("Welcome to Voice Receiver!", "primary");
         }, 2000);
       });

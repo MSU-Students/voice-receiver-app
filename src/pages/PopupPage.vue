@@ -113,7 +113,6 @@ export default {
 
   methods: {
     onSpeaker() {
-      serverConnectionService.sendData();
       return (this.isSpeakerOn = true);
     },
     muteSpeaker() {
