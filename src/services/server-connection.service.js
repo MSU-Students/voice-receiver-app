@@ -1,6 +1,7 @@
 import SockJS from "sockjs-client";
 import Stomp from "webstomp-client";
 
+let index = 0;
 class ServerConnectionService {
   async connect(ip, port) {
     return new Promise((resolve, reject) => {
@@ -12,12 +13,11 @@ class ServerConnectionService {
         {},
         frame => {
           resolve(frame);
-          this.stompClient.subscribe("/topic/announcements", tick => {
+          this.stompClient.subscribe("/topic/announcements", async tick => {
             let buffer = JSON.parse(tick.body);
-            console.log(buffer.content.split(","));
-            let arrayBuffer = buffer.content.split(",");
-            var snd = new Audio("data:audio/wav;base64," + arrayBuffer[1]);
-            snd.play();
+            // const message = buffer.content.split(",");
+            const message = buffer.content;
+            this.play(message);
           });
           this.stompClient.subscribe("/topic/register", tick => {
             let buffer = JSON.parse(tick.body);
@@ -31,27 +31,27 @@ class ServerConnectionService {
       );
     });
   }
+  player = Promise.resolve();
+  async play(message) {
+    await this.player;
+    this.player = new Promise(resolve => {
+      console.log("omair: ", message.data);
+      var announce = new Audio("data:audio/wav;base64," + message.data);
+      announce.play();
+      announce.onended = resolve;
+    });
+  }
   async disconnect() {
     if (this.stompClient) {
       await this.stompClient.disconnect();
-    }
-  }
-  async send(message) {
-    console.log("Send message: " + message);
-    if (this.stompClient && this.stompClient.connected) {
-      const msg = { name: message };
-      console.log(JSON.stringify(msg));
-      await this.stompClient.send("/app/information", JSON.stringify(msg), {});
-    } else {
-      console.log("Not connected to server! ");
     }
   }
 
   async sendData() {
     if (this.stompClient && this.stompClient.connected) {
       const msg = { institution: "CIT", code: "1234", status: "online" };
-      console.log(JSON.stringify(msg));
-      await this.stompClient.send("/app/institution", JSON.stringify(msg), {});
+      //console.log(JSON.stringify(msg));
+      await this.stompClient.send("/app/instituition", JSON.stringify(msg), {});
     } else {
       console.log("Not connected to server! ");
     }
@@ -78,7 +78,6 @@ class ServerConnectionService {
     let ip = JSON.parse(localStorage.getItem("server_ip"));
     return await ip;
   }
-
 }
 
 let serverConnectionService = new ServerConnectionService();
