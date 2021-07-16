@@ -9,20 +9,20 @@ class ServerConnectionService {
       const dev = `http://${ip}:${port}/ws`;
       this.socket = new SockJS(dev);
       this.stompClient = Stomp.over(this.socket);
+      this.stompClient.debug = () => {};
       const stomp = this.stompClient.connect(
         {},
         frame => {
           resolve(frame);
           this.stompClient.subscribe("/topic/announcements", async tick => {
             let buffer = JSON.parse(tick.body);
-            const message = buffer.content.split(",");
-            console.log("message 1", message[1]);
-            // const message = buffer.content;
-            this.play(message[1]);
-          });
-          this.stompClient.subscribe("/topic/register", tick => {
-            let buffer = JSON.parse(tick.body);
-            console.log(buffer);
+            const headers = tick.headers;
+
+            const data = buffer.content;
+            const validEncoding = "data:application/octet-stream;base64,";
+            if (data.startsWith(validEncoding)) {
+              this.play(headers["message-id"], data.substr(validEncoding.length));
+            }
           });
         },
         error => {
@@ -33,14 +33,33 @@ class ServerConnectionService {
     });
   }
   player = Promise.resolve();
-  async play(message) {
-    await this.player;
-    this.player = new Promise(resolve => {
-      var announce = new Audio("data:audio/wav;base64," + message);
-      announce.play();
-      announce.onended = resolve;
-      announce.onerror = resolve;
-    });
+  announcer = new Audio();
+  play(msgId, message) {
+    const self = this;
+    console.log("Queue ", msgId, this.buffed);
+    this.player = this.player.then(() => {
+      console.log("Play ", msgId);
+      return new Promise(resolve => {
+        var announce = new Audio();
+        announce.src = "data:audio/wav;base64," + message;
+        announce.autoplay = true;
+        announce.load();
+        announce.onload = ()=> {
+          //announce.play().;
+        }
+        
+        announce.onended = () => {
+          resolve();
+          console.log("Done Playing", msgId);
+        };
+        announce.onerror = (e) => {
+          resolve();
+          console.log("Failed Playing", msgId, e.message);
+        };
+      }); 
+    })
+    
+     
   }
   async disconnect() {
     if (this.stompClient) {
