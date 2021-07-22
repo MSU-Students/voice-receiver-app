@@ -19,7 +19,7 @@ class ServerConnectionService {
             const headers = tick.headers;
 
             const data = buffer.content;
-            const validEncoding = "data:application/octet-stream;base64,";
+            const validEncoding = "data:audio/webm;codecs=opus;base64,";
             if (data.startsWith(validEncoding)) {
               this.play(headers["message-id"], data.substr(validEncoding.length));
             }
@@ -32,35 +32,72 @@ class ServerConnectionService {
       );
     });
   }
-  player = Promise.resolve();
-  announcer = new Audio();
-  play(msgId, message) {
+  startPlayer() {
     const self = this;
-    console.log("Queue ", msgId, this.buffed);
-    this.player = this.player.then(() => {
-      console.log("Play ", msgId);
-      return new Promise(resolve => {
-        var announce = new Audio();
-        announce.src = "data:audio/wav;base64," + message;
-        announce.autoplay = true;
-        announce.load();
-        announce.onload = ()=> {
-          //announce.play().;
+    var mediaSource = new MediaSource();
+    
+    this.player.src = window.URL.createObjectURL(mediaSource);
+    mediaSource.addEventListener('sourceopen', async function(e) {
+       self.sourceBuffer = mediaSource.addSourceBuffer('audio/webm\;codecs=opus');
+    });
+    //this.player.autoplay = true;
+    this.player.play();
+  }
+  sourceBuffer = null;
+  player = new Audio();
+  async play(msgId, message) {
+    const self = this;
+    console.log("Queue ", msgId);
+    
+    if (self.sourceBuffer && self.sourceBuffer.updating) {
+      await (new Promise((resolve) => {
+        self.sourceBuffer.onupdateend = resolve;
+      }))
+    }
+    
+    self.sourceBuffer.appendBuffer(Buffer.from(message, 'base64'));
+    
+    await (new Promise((resolve) => {
+      self.sourceBuffer.onupdateend = resolve;
+      console.log('done appending ', msgId);
+    }))
+    
+    //self.player.play(); 
+  }
+
+  blobs = [];
+  play2(msgId, data) {
+    //start
+  
+    const self = this;
+    self.blobs.push(data);
+    var mediaSource = new MediaSource();
+    let sourceBuffer = undefined;
+    var replay = new Audio();
+    replay.src = window.URL.createObjectURL(mediaSource);
+    mediaSource.addEventListener('sourceopen', async function(e) {
+        sourceBuffer = mediaSource.addSourceBuffer('audio/webm\;codecs=opus');
+
+        for (let index = 0; index < self.blobs.length; index++) {
+          const blob = self.blobs[index];
+          if (sourceBuffer && sourceBuffer.updating) {
+            await (new Promise((resolve) => {
+              sourceBuffer.onupdateend = resolve;
+            }))
+            
+          }
+          
+          const head = 'data:audio/webm;codecs=opus;base64,';
+          sourceBuffer.appendBuffer(Buffer.from(blob.substr(head.length), 'base64'));
         }
         
-        announce.onended = () => {
-          resolve();
-          console.log("Done Playing", msgId);
-        };
-        announce.onerror = (e) => {
-          resolve();
-          console.log("Failed Playing", msgId, e.message);
-        };
-      }); 
-    })
-    
-     
+        
+        console.log('playing...........', self.blobs.length);
+    });
+    //send multiple 
   }
+  
+
   async disconnect() {
     if (this.stompClient) {
       await this.stompClient.disconnect();

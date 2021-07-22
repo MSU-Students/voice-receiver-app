@@ -49,6 +49,7 @@ export default {
   created() {
     this.getIP();
       serverConnectionService.isItemExist("server_ip");
+      serverConnectionService.startPlayer();
   },
   methods: {
     async getIP() {
