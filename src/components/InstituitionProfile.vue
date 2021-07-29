@@ -72,7 +72,6 @@ export default {
     async getIP() {
       const ip = await serverConnectionService.getIpAddress();
       this.server_ip = ip;
-      console.log(this.server_ip);
     }
   }
 };

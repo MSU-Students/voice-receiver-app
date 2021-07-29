@@ -40,8 +40,16 @@ class ServerConnectionService {
     mediaSource.addEventListener('sourceopen', async function(e) {
        self.sourceBuffer = mediaSource.addSourceBuffer('audio/webm\;codecs=opus');
     });
-    //this.player.autoplay = true;
-    this.player.play();
+    this.player.autoplay = true;
+    ///this.player.play();
+  }
+  mute() {
+    this.player.muted = true;
+    console.log('muted.');
+  }
+  unmute() {
+    this.player.muted = false;
+    console.log('unmute.')
   }
   sourceBuffer = null;
   player = new Audio();

@@ -9,31 +9,30 @@
         </q-card-section>
         <q-card-section v-if="isSpeakerOn" class="text-center">
           <q-btn
-            class="shadow-13"
+            class="shadow-10"
             size="35px"
             round
-            color="green-7"
+            outline
+            color="info"
+            text-color="green"
             icon="volume_up"
             @click="muteSpeaker()"
           >
             <q-tooltip
-              anchor="center middle"
-              self="center middle"
-              :offset="[10, 10]"
+              content-class="bg-red text-white shadow-4" :offset="[10, 10]"
             >
-              <strong>Press to Mute </strong>
-              <q-icon size="20px" name="volume_off" />
+              Are you sure, you want to mute broadcasting?
             </q-tooltip>
           </q-btn>
           <div class="row justify-center text-overline q-pt-sm">
             {{ status }}
-            <q-spinner-audio color="primary" size="2em" />
           </div>
         </q-card-section>
         <q-card-section v-else class="text-center">
           <q-btn
             size="35px"
             round
+            outline
             color="red-6"
             icon="volume_off"
             @click="onSpeaker()"
@@ -97,7 +96,7 @@ export default {
   data() {
     return {
       isSpeakerOn: true,
-      status: "Listening...",
+      status: "Press to mute",
       showAudioLoader: false,
       speakers: [],
       selectedDevice: "",
@@ -113,10 +112,12 @@ export default {
 
   methods: {
     onSpeaker() {
-      return (this.isSpeakerOn = true);
+      this.isSpeakerOn = true;
+      serverConnectionService.unmute();
     },
     muteSpeaker() {
-      return (this.isSpeakerOn = false);
+      this.isSpeakerOn = false;
+      serverConnectionService.mute();
     },
     async playSound() {
       const audio = require("src/assets/audio/countdown.mp3");

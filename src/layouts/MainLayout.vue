@@ -3,7 +3,7 @@
     <q-header elevated>
       <q-toolbar>
         <q-toolbar-title>
-          Voice Caster app
+          Voice Receiver app
         </q-toolbar-title>
 
         <div></div>

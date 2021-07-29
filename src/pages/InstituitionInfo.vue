@@ -78,7 +78,7 @@
                 ]"
               />
 
-              <q-input
+              <!-- <q-input
                 filled
                 type="number"
                 v-model="area.code"
@@ -90,7 +90,7 @@
                     (val !== null && val !== '') || 'Please type the code #.',
                   val => (val > 0 && val < 1001) || 'Invalid code Num.'
                 ]"
-              />
+              /> -->
 
               <div>
                 <q-btn
@@ -124,7 +124,6 @@ export default {
       officeDetails: {},
       area: {
         client: null,
-        code: null,
         status: "Online"
       },
       showSubmitLoader: false,
@@ -168,7 +167,7 @@ export default {
         .then(() => {
           setTimeout(() => {
             this.showSaveLoader = false;
-            this.notifyMessage("IP Address and Port configured!", "green");
+            this.notifyMessage("IP Address and Port saved.", "primary");
           }, 2000);
         });
     },
@@ -178,7 +177,7 @@ export default {
         message: msg,
         color: color,
         timeout: 1000,
-        icon: "cloud_done",
+        icon: "check_circle_outline",
         position: "center"
       });
     }
